@@ -6,7 +6,7 @@
 #    By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 11:40:57 by osukhore          #+#    #+#              #
-#    Updated: 2025/11/20 11:50:25 by osukhore         ###   ########.fr        #
+#    Updated: 2025/11/26 10:53:26 by osukhore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,9 @@ CFLAGS += -D BUFFER_SIZE=42
 #CFLAGS += -g
 
 OBJ_DIR = obj/
-LIBDIR = ./libft/
-LIBFT = $(LIBDIR)libft.a
-IFLAGS = -I$(LIBDIR)
 LIFLAGS = -L.
-LFLAGS += -lft
-LIFLAGS += -L$(LIBDIR)
 LFLAGS = -lftgnl
+LFLAGS += -lft
 
 SRC_FILES := \
 get_next_line.c \
