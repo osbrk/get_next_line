@@ -6,7 +6,7 @@
 /*   By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:44:57 by osukhore          #+#    #+#             */
-/*   Updated: 2025/11/26 14:35:06 by osukhore         ###   ########.fr       */
+/*   Updated: 2025/11/26 14:49:36 by osukhore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*get_next_line(int fd)
 	static char	buf[BUFFER_SIZE + 1];
 	char		*str;
 	int			line;
+	int			nl_index;
 //Check line
 //Control read
 //Double check buf and the rest
@@ -33,6 +34,12 @@ char	*get_next_line(int fd)
 			return (NULL);
 		buf[line] = '\0';
 	}
+	//Here we check for nl
+	nl_index = ft_strnl(buf);
+	//if nl_index == NULL, we can move to placeholder
+	//else - ft_split at /n?
+
+	//Here we move buf to placeholder
 	call_count++;
 	ft_pustr(str);
 }

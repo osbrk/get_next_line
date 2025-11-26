@@ -6,28 +6,42 @@
 /*   By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:15:39 by osukhore          #+#    #+#             */
-/*   Updated: 2025/11/26 10:59:48 by osukhore         ###   ########.fr       */
+/*   Updated: 2025/11/26 14:52:47 by osukhore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t				i;
+	unsigned char		*dest2;
+	const unsigned char	*src2;
+
+	i = 0;
+	dest2 = (unsigned char *)dest;
+	src2 = (const unsigned char *)src;
+	if (dest == src)
+		return (dest);
+	while (i < n)
+	{
+		dest2[i] = src2[i];
+		i++;
+	}
+	return (dest);
+}
+
 size_t	ft_strnl(const char *s)
 {
 	size_t	i;
-	char	a;
 
-	i = 0;
-	a = '\n';
-	while (s[i] != '\0')
+	i = -1;
+	while (s[++i] != '\0')
 	{
-		if (s[i] == a)
+		if (s[i] == '\n')
 			return (i);
-		i++;
 	}
-	if (a == 0)
-		return (i);
-	return (0);
+	return (NULL);
 }
 
 void	ft_putstr(char *str)

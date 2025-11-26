@@ -6,14 +6,14 @@
 #    By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 11:40:57 by osukhore          #+#    #+#              #
-#    Updated: 2025/11/26 10:53:26 by osukhore         ###   ########.fr        #
+#    Updated: 2025/11/26 14:54:44 by osukhore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := get_next_line.a
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-CFLAGS += -D BUFFER_SIZE=42
+CFLAGS += -D BUFFER_SIZE=n
 #CFLAGS += -g
 
 OBJ_DIR = obj/
