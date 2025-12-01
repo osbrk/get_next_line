@@ -6,112 +6,93 @@
 /*   By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:44:57 by osukhore          #+#    #+#             */
-/*   Updated: 2025/11/26 15:47:15 by osukhore         ###   ########.fr       */
+/*   Updated: 2025/12/01 09:45:11 by osukhore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <fcntl.h>
+
+static char	*clear_all(char *buf, char *placeholder)
+{
+	if (buf != NULL)
+		free(buf);
+	if (placeholder != NULL)
+		free(placeholder);
+	return (NULL);
+}
+
+static char	*read_into_placeholder(int fd, char *placeholder)
+{
+	char	*buf;
+	ssize_t	bytes;
+
+	buf = malloc(BUFFER_SIZE + 1);
+	if (buf == NULL)
+		return (NULL);
+	bytes = 1;
+	while (ft_strchr(placeholder, '\n') == NULL && bytes > 0)
+	{
+		bytes = read(fd, buf, BUFFER_SIZE);
+		if (bytes < 0)
+			return (clear_all(buf, placeholder));
+		buf[bytes] = '\0';
+		if (bytes == 0)
+			break ;
+		placeholder = ft_strjoin(placeholder, buf);
+		if (placeholder == NULL)
+			return (clear_all(buf, NULL));
+	}
+	free(buf);
+	return (placeholder);
+}
+
+static char	*extract_line(char *placeholder)
+{
+	size_t	i;
+
+	if (placeholder == NULL || placeholder[0] == '\0')
+		return (NULL);
+	i = 0;
+	while (placeholder[i] && placeholder[i] != '\n')
+		i++;
+	if (placeholder[i] == '\n')
+		i++;
+	return (ft_substr(placeholder, 0, i));
+}
+
+static char	*update_placeholder(char *placeholder)
+{
+	size_t	i;
+	char	*next;
+
+	if (placeholder == NULL)
+		return (NULL);
+	i = 0;
+	while (placeholder[i] && placeholder[i] != '\n')
+		i++;
+	if (placeholder[i] == '\0')
+	{
+		free(placeholder);
+		return (NULL);
+	}
+	i++;
+	next = ft_substr(placeholder, i, ft_strlen(placeholder + i));
+	free(placeholder);
+	return (next);
+}
 
 char	*get_next_line(int fd)
 {
-	static char	buf[BUFFER_SIZE + 1];
-	char		*str;
-	int			line;
-	char		*placeholder;
+	static char	*placeholder;
+	char		*line;
 
-	if (fd == -1 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (line != 0)
-	{
-		line = read(fd, buf, BUFFER_SIZE);
-		if (line == -1)
-			return (NULL);
-		buf[line] = '\0';
-	}
-	if (ft_strnl(buf) == NULL)
-		str = ft_strjoin(str, buf);
-	else
-	{
-		placeholder = ft_substr(buf, 0, (ft_strnl(buf)));
-		str = ft_strjoin(str, placeholder);
-	}
-	if (placeholder)
-		free(placeholder);
-	if (line == 0)
-		return(str);
+	placeholder = read_into_placeholder(fd, placeholder);
+	if (placeholder == NULL)
+		return (NULL);
+	line = extract_line(placeholder);
+	placeholder = update_placeholder(placeholder);
+	return (line);
 }
 
-//How do I know when to continue with the next line?
-
-#include <stdio.h>
-static	void style(char style)
-{
-	//BLUE
-	if (style == 'B')
-		printf("\e[34m");
-	//ERROR
-	else if(style == 'E')
-		printf("\e[1;31;7m");
-	//TITLE
-	else if(style == 'T')
-		printf("\e[1;7m");
-	//RESET TO BLACK
-	else if(style == 'R')
-		printf("\e[0m\n");
-}
-
-int main(int argc, char **argv)
-{
-	int		fd;
-	int		fd_argv;
-	char	**str;
-	char	*argv_str;
-	int		i;
-	int		lines_to_print;
-
-	lines_to_print = 10;
-
-	//ERROR CHECK
-	if (argc < 2)
-	{
-		printf("\n--------------------------------------------\n");
-		style('E');
-		printf("INPUT ");
-		style('R');
-		style('T');
-		printf("Need ARGV to work with: \n\n"
-			" 1. String \n");
-		style('R');
-		printf("--------------------------------------------\n");
-		return (0);
-	}
-
-	//FILE NAME
-	style('T');
-	printf("\n ft_printft.c \n");
-	style('R');
-
-	//TEST 01: ARGV
-	printf("\n--------------------------------------------\n");
-	style('T');
-	printf(" TEST 01: ARGV \n\n");
-	style('r');
-	fd_argv = open(argv[1], O_CREAT | O_EXCL);
-	argv_str = get_next_line(fd_argv);
-	free(argv_str);
-
-	//TEST 02: READ FD
-	printf("\n--------------------------------------------\n");
-	style('T');
-	printf(" TEST 02: FD READ \n\n");
-	style('r');
-
-	i = 0;
-	fd = open("path/to/file", O_RDONLY);
-	while (i < )
-	str[i] = get_next_line(fd);
-	printf("%s", str);
-	free(str);
-	close(fd);
-}

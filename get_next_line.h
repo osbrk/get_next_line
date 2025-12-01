@@ -6,25 +6,25 @@
 /*   By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:45:22 by osukhore          #+#    #+#             */
-/*   Updated: 2025/11/26 15:12:26 by osukhore         ###   ########.fr       */
+/*   Updated: 2025/12/01 09:47:14 by osukhore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTGNL_H
-# define LIBFTGNL_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE=42
-#endif //BUFFER
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 # include <unistd.h>
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
-void	ft_putstr(char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
-size_t	ft_strnl(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(const char *s);
+char	*ft_strjoin(char *s1, const char *s2);
+char	*ft_substr(const char *s, unsigned int start, size_t len);
 
-#endif //LIBFTGNL_H
+#endif
