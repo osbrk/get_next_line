@@ -6,53 +6,45 @@
 #    By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 11:40:57 by osukhore          #+#    #+#              #
-#    Updated: 2025/11/26 14:54:44 by osukhore         ###   ########.fr        #
+#    Updated: 2025/12/01 10:19:48 by osukhore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME := get_next_line.a
-CC := cc
-CFLAGS := -Wall -Wextra -Werror
-CFLAGS += -D BUFFER_SIZE=n
-#CFLAGS += -g
+NAME    := get_next_line.a
+CC      := cc
+CFLAGS  := -Wall -Wextra -Werror
+#CFLAGS += -D BUFFER_SIZE=42
 
-OBJ_DIR = obj/
-LIFLAGS = -L.
-LFLAGS = -lftgnl
-LFLAGS += -lft
+OBJ_DIR := obj
+IFLAGS  := -I.
 
 SRC_FILES := \
-get_next_line.c \
+	get_next_line.c \
+	get_next_line_utils.c
 
-OBJ_FILES := $(addprefix $(OBJ_DIR), $(SRC_FILES:.c=.o))
+OBJ_FILES := $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ_FILES)
+$(NAME): $(OBJ_FILES)
 	ar rcs $(NAME) $(OBJ_FILES)
 
-$(OBJ_DIR)%.o: %.c
+$(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
-$(LIBFT):
-	$(MAKE) -C $(LIBDIR)
-	cp $(LIBFT) $(NAME)
-
 clean:
-	$(MAKE) -C $(LIBDIR) clean
 	rm -f $(OBJ_FILES)
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(MAKE) -C $(LIBDIR) fclean
 	rm -f $(NAME)
+	rm -f a.out
 
 re: fclean all
 
-test: fclean $(NAME)
-	$(CC) $(CFLAGS) OS_gnl.c $(IFLAGS) $(LIFLAGS) $(LFLAGS)
-#	valgrind ./a.out
+test: re
+	$(CC) $(CFLAGS) $(IFLAGS) OS_gnl.c $(NAME) -o
 	./a.out
 
 .PHONY: all clean fclean re test
