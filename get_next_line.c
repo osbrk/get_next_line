@@ -6,7 +6,7 @@
 /*   By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 11:44:57 by osukhore          #+#    #+#             */
-/*   Updated: 2025/12/05 14:28:28 by osukhore         ###   ########.fr       */
+/*   Updated: 2025/12/05 16:03:09 by osukhore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*clear_all(char *buf, char *placeholder)
 static char	*read_into_placeholder(int fd, char *placeholder)
 {
 	char	*buf;
-	size_t	bytes;
+	ssize_t	bytes;
 
 	buf = malloc(BUFFER_SIZE + 1);
 	if (buf == NULL)
