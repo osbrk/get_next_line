@@ -6,7 +6,7 @@
 /*   By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 09:46:01 by osukhore          #+#    #+#             */
-/*   Updated: 2025/12/01 09:48:30 by osukhore         ###   ########.fr       */
+/*   Updated: 2025/12/05 11:41:46 by osukhore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ static void	style(char style)
 int	main(int argc, char **argv)
 {
 	int		fd;
-	char	*line;
+	char	*linetest1;
+	char	*linetest2;
+	char	*linetest3;
 	int		i;
 	int		lines_to_print;
 
@@ -58,9 +60,40 @@ int	main(int argc, char **argv)
 	style('R');
 	printf("\n--------------------------------------------\n");
 
-	// TEST 01: READ FIRST 10 LINES
+	// TEST 01: READ FIRST 1 LINE
 	style('T');
-	printf(" TEST 01: FIRST %d LINES \n", lines_to_print);
+	printf(" TEST 01: FIRST 1 LINE \n");
+	style('R');
+	printf("\n");
+
+	fd = open(argv[1], O_RDONLY);
+	if (fd < 0)
+	{
+		style('E');
+		printf("Could not open file\n");
+		style('R');
+		return (0);
+	}
+
+	linetest1 = get_next_line(fd);
+	if (linetest1 == NULL)
+	{
+		style('B');
+		printf("[EOF]\n");
+		style('R');
+	}
+	else
+	{
+		printf("1: %s", linetest1);
+		free(linetest1);
+	}
+
+	close(fd);
+
+	// TEST 02: READ FIRST 10 LINES
+	printf("\n--------------------------------------------\n");
+	style('T');
+	printf(" TEST 02: FIRST %d LINES \n", lines_to_print);
 	style('R');
 	printf("\n");
 
@@ -76,25 +109,26 @@ int	main(int argc, char **argv)
 	i = 0;
 	while (i < lines_to_print)
 	{
-		line = get_next_line(fd);
-		if (line == NULL)
+		linetest2 = get_next_line(fd);
+		if (linetest2 == NULL)
 		{
 			style('B');
 			printf("[EOF]\n");
 			style('R');
 			break ;
 		}
-		printf("%s", line);
-		free(line);
+		printf("%d: %s", (i + 1), linetest2);
+		free(linetest2);
 		i++;
 	}
 
 	close(fd);
 
-	// TEST 02: FULL FILE READ
+
+	// TEST 03: FULL FILE READ
 	printf("\n--------------------------------------------\n");
 	style('T');
-	printf(" TEST 02: FULL FILE UNTIL EOF \n");
+	printf(" TEST 03: FULL FILE UNTIL EOF \n");
 	style('R');
 	printf("\n");
 
@@ -106,14 +140,15 @@ int	main(int argc, char **argv)
 		style('R');
 		return (0);
 	}
-
+	i = 0;
 	while (1)
 	{
-		line = get_next_line(fd);
-		if (line == NULL)
+		i++;
+		linetest3 = get_next_line(fd);
+		if (linetest3 == NULL)
 			break ;
-		printf("%s", line);
-		free(line);
+		printf("%d: %s", i, linetest3);
+		free(linetest3);
 	}
 
 	style('B');

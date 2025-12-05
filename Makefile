@@ -6,7 +6,7 @@
 #    By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/20 11:40:57 by osukhore          #+#    #+#              #
-#    Updated: 2025/12/01 10:19:48 by osukhore         ###   ########.fr        #
+#    Updated: 2025/12/05 11:39:53 by osukhore         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ fclean: clean
 re: fclean all
 
 test: re
-	$(CC) $(CFLAGS) $(IFLAGS) OS_gnl.c $(NAME) -o
+	$(CC) $(CFLAGS) $(IFLAGS) OS_gnl.c $(NAME)
 	./a.out
 
 .PHONY: all clean fclean re test
