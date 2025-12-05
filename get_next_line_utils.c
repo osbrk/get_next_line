@@ -6,7 +6,7 @@
 /*   By: osukhore <osukhore@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/20 12:15:39 by osukhore          #+#    #+#             */
-/*   Updated: 2025/12/01 09:29:55 by osukhore         ###   ########.fr       */
+/*   Updated: 2025/12/05 14:22:37 by osukhore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,6 @@ char	*ft_strchr(const char *s, int c)
 	if (ch == '\0')
 		return ((char *)(s + i));
 	return (NULL);
-}
-
-char	*ft_strdup(const char *s)
-{
-	size_t	len;
-	size_t	i;
-	char	*str;
-
-	len = ft_strlen(s);
-	str = (char *)malloc(len + 1);
-	if (str == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		str[i] = s[i];
-		i++;
-	}
-	str[i] = '\0';
-	return (str);
 }
 
 char	*ft_strjoin(char *s1, const char *s2)
